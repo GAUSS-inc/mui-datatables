@@ -25,6 +25,7 @@ class MUIDataTableCustomFilterList extends React.Component {
 
   render() {
     const { classes, filterList } = this.props;
+    console.log(filterList);
 
     return (
       <div className={classes.root}>
