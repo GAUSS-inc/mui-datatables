@@ -25,12 +25,10 @@ class MUIDataTableCustomFilterList extends React.Component {
 
   render() {
     const { classes, filterList } = this.props;
-    console.log(filterList);
-
     return (
       <div className={classes.root}>
         {filterList.map((item, index) => (
-          <Chip label={item} key={index} className={classes.chip} />
+          <Chip label={item.label} color={item.color} key={index} className={classes.chip} />
         ))}
       </div>
     );

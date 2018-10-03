@@ -220,7 +220,7 @@ class MUIDataTable extends React.Component {
    */
 
   setTableData(props, status, callback = () => {}) {
-    const { data, columns, options, customFilterList } = props;
+    const { data, columns, options } = props;
     let columnData = [],
       filterData = [],
       filterList = [],
@@ -310,7 +310,6 @@ class MUIDataTable extends React.Component {
         columns: columnData,
         filterData: filterData,
         filterList: filterList,
-        customFilterList: customFilterList,
         selectedRows: selectedRowsData,
         data: tableData,
         displayData: this.getDisplayData(columnData, tableData, filterList, prevState.searchText),
@@ -766,7 +765,7 @@ class MUIDataTable extends React.Component {
   }
 
   render() {
-    const { classes, title } = this.props;
+    const { classes, title, customFilterList } = this.props;
     const {
       announceText,
       activeColumn,
@@ -776,7 +775,6 @@ class MUIDataTable extends React.Component {
       page,
       filterData,
       filterList,
-      customFilterList,
       rowsPerPage,
       selectedRows,
       searchText,
@@ -843,7 +841,6 @@ class MUIDataTable extends React.Component {
               options={this.options}
               searchText={searchText}
               filterList={filterList}
-              customFilterList={customFilterList}
             />
           </Table>
         </div>
