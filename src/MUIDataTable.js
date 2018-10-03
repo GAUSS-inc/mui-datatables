@@ -5,6 +5,7 @@ import Table from "@material-ui/core/Table";
 import MUIDataTableToolbar from "./MUIDataTableToolbar";
 import MUIDataTableToolbarSelect from "./MUIDataTableToolbarSelect";
 import MUIDataTableFilterList from "./MUIDataTableFilterList";
+import MUIDataTableCutomFilterList from "./MUIDataTableCustomFilterList";
 import MUIDataTableBody from "./MUIDataTableBody";
 import MUIDataTableResize from "./MUIDataTableResize";
 import MUIDataTableHead from "./MUIDataTableHead";
@@ -82,6 +83,7 @@ class MUIDataTable extends React.Component {
       page: PropTypes.number,
       count: PropTypes.number,
       filterList: PropTypes.array,
+      customFilterList: PropTypes.array,
       rowsSelected: PropTypes.array,
       rowsPerPage: PropTypes.number,
       rowsPerPageOptions: PropTypes.array,
@@ -117,6 +119,7 @@ class MUIDataTable extends React.Component {
     columns: [],
     filterData: [],
     filterList: [],
+    customFilterList: [],
     selectedRows: {
       data: [],
       lookup: {},
@@ -197,7 +200,7 @@ class MUIDataTable extends React.Component {
   };
 
   setTableOptions(props) {
-    const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "rowsPerPageOptions"];
+    const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "customFilterList", "rowsPerPageOptions"];
     const optState = optionNames.reduce((acc, cur) => {
       if (this.options[cur] !== undefined) {
         acc[cur] = this.options[cur];
@@ -223,6 +226,7 @@ class MUIDataTable extends React.Component {
     let columnData = [],
       filterData = [],
       filterList = [],
+      customFilterList = [],
       tableData = [];
 
     columns.forEach((column, colIndex) => {
@@ -284,6 +288,7 @@ class MUIDataTable extends React.Component {
     });
 
     if (options.filterList) filterList = options.filterList;
+    if (options.customFilterList) customFilterList = options.customFilterList;
 
     if (filterList.length !== columns.length) {
       throw new Error("Provided options.filterList does not match the column length");
@@ -309,6 +314,7 @@ class MUIDataTable extends React.Component {
         columns: columnData,
         filterData: filterData,
         filterList: filterList,
+        customFilterList: customFilterList,
         selectedRows: selectedRowsData,
         data: tableData,
         displayData: this.getDisplayData(columnData, tableData, filterList, prevState.searchText),
@@ -774,6 +780,7 @@ class MUIDataTable extends React.Component {
       page,
       filterData,
       filterList,
+      customFilterList,
       rowsPerPage,
       selectedRows,
       searchText,
@@ -804,7 +811,8 @@ class MUIDataTable extends React.Component {
             toggleViewColumn={this.toggleViewColumn}
           />
         )}
-        <MUIDataTableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} />
+        {/* <MUIDataTableFilterList options={this.options} filterList={filterList} filterUpdate={this.filterUpdate} /> */}
+        <MUIDataTableCustomFilterList options={this.options} filterList={customFilterList} />
         <div
           style={{ position: "relative" }}
           className={this.options.responsive === "scroll" ? classes.responsiveScroll : null}>
@@ -839,6 +847,7 @@ class MUIDataTable extends React.Component {
               options={this.options}
               searchText={searchText}
               filterList={filterList}
+              customFilterList={customFilterList}
             />
           </Table>
         </div>
