@@ -200,14 +200,13 @@ class MUIDataTable extends React.Component {
   };
 
   setTableOptions(props) {
-    const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "customFilterList", "rowsPerPageOptions"];
+    const optionNames = ["rowsPerPage", "page", "rowsSelected", "filterList", "rowsPerPageOptions"];
     const optState = optionNames.reduce((acc, cur) => {
       if (this.options[cur] !== undefined) {
         acc[cur] = this.options[cur];
       }
       return acc;
     }, {});
-    console.log("210", optState);
     this.validateOptions(optState);
     this.setState(optState);
   }
@@ -221,12 +220,10 @@ class MUIDataTable extends React.Component {
    */
 
   setTableData(props, status, callback = () => {}) {
-    const { data, columns, options } = props;
-    console.log(props.customFilterList);
+    const { data, columns, options, customFilterList } = props;
     let columnData = [],
       filterData = [],
       filterList = [],
-      customFilterList = [],
       tableData = [];
 
     columns.forEach((column, colIndex) => {
@@ -288,7 +285,6 @@ class MUIDataTable extends React.Component {
     });
 
     if (options.filterList) filterList = options.filterList;
-    if (options.customFilterList) customFilterList = options.customFilterList;
 
     if (filterList.length !== columns.length) {
       throw new Error("Provided options.filterList does not match the column length");
@@ -785,7 +781,6 @@ class MUIDataTable extends React.Component {
       selectedRows,
       searchText,
     } = this.state;
-    console.log(customFilterList);
 
     const rowCount = this.options.count || displayData.length;
 
